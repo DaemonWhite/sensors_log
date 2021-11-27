@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from sense_emu import SenseHat
 import time
 import datetime
@@ -79,8 +80,6 @@ async def log(stopTime, sleep, sleepTime):
         
 
         h = hours()
-
-        print(h)
     
         if sleepTime >= sleep:
             repLog = "log/"
@@ -89,10 +88,7 @@ async def log(stopTime, sleep, sleepTime):
             sleepTime = 0.0
     
         else:
-    
             sleepTime += stopTime
-        
-        print(sleepTime)
 
         file.writeFile(repLog, h)
         file.writeFile(repLog,  file.format("humidity", humidity))
