@@ -1,30 +1,25 @@
 #!/usr/bin/env python3
-import asyncio
 
 import conf as ini
+import asyncio
+
 import file
 import pysense as senseHat
 
-from packaging import version
+from data import Environement
+
+env = Environement()
 
 async def main():
-    version = "0.0.1"
 
-    if ini.verif():
-        ini.create()
-    else:
-        ini.update(version)
+    test = input("La valeur de ta maison?")
 
     file.verif()
-
-    sleep = float(ini.load('DEFAULT', 'timestep'))
-    sleep_Log = float(ini.load('DEFAULT', 'log_time'))
-    sleep_Log_Time = sleep_Log
 
     print("Verification de la présence su senseHat")
     senseHat.test()
 
     print("senseHat detecter démarage")
-    await asyncio.gather(senseHat.event(sleep), senseHat.log(sleep, sleep_Log, sleep_Log_Time))
+    await asyncio.gather(senseHat.event(env), senseHat.log(env))
 
 asyncio.run(main())

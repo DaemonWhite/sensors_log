@@ -20,7 +20,15 @@ def verif():
 
 def create():
     
-    config['DEFAULT'] = {'log': 'true', 'log_time' : '300.0','event': 'true', 'timeStep' : '0.5'}
+    #config['DEFAULT'] = {'log': 'true', 'log_time' : '300.0','event': 'true', 'timeStep' : '0.5'}
+    config['DEFAULT'] = {'term': True, 'path': '',
+        'log_file': 'true',
+        'log_view': 'false',
+        'event_file': 'true',
+        'event_log': 'false',
+        'log_time': '300.0',
+        'log_step': '0.5',
+        'event_step': '0.1'}
     config['SENSORS'] = {'humid': 'true', 'presure': 'true', 'temp': 'false', 'orientation' : 'true', 'Accel' : 'false'}
     config['VERSION'] = {'version': '0.0.1a'}
 

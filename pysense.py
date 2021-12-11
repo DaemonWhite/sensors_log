@@ -7,7 +7,6 @@ import asyncio
 import conf as ini
 import file
 
-
 # defineSense
 sense = SenseHat()
 
@@ -73,15 +72,21 @@ def test():
     sense.set_pixels(defineColors)
 
 #Event isWokining
-async def event(stopTime):
+async def event(env):
     repEvent = "event/event.txt"
+
+    stopTime = float(env.getDefault("event_step"))
 
     while True:
         file.writeFile(repEvent, "ok")
         await asyncio.sleep(stopTime)
 
 #Log isWorkig but functional
-async def log(stopTime, sleep, sleepTime):
+async def log(env):
+
+    stopTime = float(env.getDefault("log_step"))
+    sleep = float(env.getDefault("log_time"))
+    sleepTime = sleep
 
     isHumidity = loadConf('humid')
     isPressure =  loadConf('presure')
