@@ -12,13 +12,22 @@ env = Environement()
 
 async def main():
 
+    restart= True
+
     file.verif()
 
     print("Verification de la présence su senseHat")
     senseHat.test()
 
     print("senseHat detecter démarage")
-    await asyncio.gather(senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
+
+    while restart:
+        retFunc = await asyncio.gather(senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
+        print(retFunc[2])
+        restart = retFunc[2]
+
+        if restart == True: 
+            print("Redemarage...")
 
     print("Fermeture du programe")
     exit()

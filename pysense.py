@@ -90,7 +90,6 @@ async def log(env):
         compas = sense.get_compass_raw()
         accel_only = sense.get_accelerometer()
         temp = sense.temp
-        
 
         h = hours()
     
