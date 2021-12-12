@@ -4,23 +4,10 @@ import time
 import datetime
 import asyncio
 
-import conf as ini
 import file
 
 # defineSense
 sense = SenseHat()
-
-def loadConf(data):
-
-    value = True
-    load = ini.load('SENSORS', data)
-
-    if load == "false" :
-        value = False
-    elif load != "false" and load != "true":
-        print("Error donner du ini incorecte la valeur", data,"prendra sera par défaut activer")
-
-    return value;
 
 #Fomat hours 
 def hours():
@@ -75,27 +62,27 @@ def test():
 async def event(env):
     repEvent = "event/event.txt"
 
-    stopTime = float(env.getDefault("event_step"))
+    stopTime = env.getTime("event_step")
 
-    while True:
+    while env.launchEvent:
         file.writeFile(repEvent, "ok")
         await asyncio.sleep(stopTime)
 
 #Log isWorkig but functional
 async def log(env):
 
-    stopTime = float(env.getDefault("log_step"))
-    sleep = float(env.getDefault("log_time"))
+    stopTime = env.getTime("log_step")
+    sleep = env.getTime("log_time")
     sleepTime = sleep
 
-    isHumidity = loadConf('humid')
-    isPressure =  loadConf('presure')
-    isOrientation = loadConf('orientation')
+    isHumidity = env.getSensors('humid')
+    isPressure =  env.getSensors('presure')
+    isOrientation = env.getSensors('orientation')
     #compas
     #accel_only
-    isTemp = loadConf('temp')
+    isTemp = env.getSensors('temp')
     
-    while True:
+    while env.launchLog:
 
         humidity = sense.humidity
         pressure = sense.get_pressure()

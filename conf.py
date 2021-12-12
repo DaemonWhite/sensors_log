@@ -21,15 +21,27 @@ def verif():
 def create():
     
     #config['DEFAULT'] = {'log': 'true', 'log_time' : '300.0','event': 'true', 'timeStep' : '0.5'}
-    config['DEFAULT'] = {'term': True, 'path': '',
+    config['ENVIRONEMENT'] = {
+        'term': True, 'path': '',
         'log_file': 'true',
         'log_view': 'false',
         'event_file': 'true',
-        'event_log': 'false',
+        'event_log': 'false'
+        }
+
+    config['TIME'] = {
         'log_time': '300.0',
         'log_step': '0.5',
-        'event_step': '0.1'}
-    config['SENSORS'] = {'humid': 'true', 'presure': 'true', 'temp': 'false', 'orientation' : 'true', 'Accel' : 'false'}
+        'event_step': '0.1'
+        }
+
+    config['SENSORS'] = {
+        'humid': 'true',
+        'presure': 'true',
+        'temp': 'false',
+        'orientation' : 'true',
+        'Accel' : 'false'}
+
     config['VERSION'] = {'version': '0.0.1a'}
 
     with open('conf.ini', 'w') as configfile:
@@ -37,8 +49,25 @@ def create():
 
     print("Fichier de configuraton créer")
 
-def load(OPTION, data):
-    value = config.get(OPTION, data)
+def load(OPTION, data, typeData):
+    #typeData 0 = str
+    #typeData 1 = float
+    #typeData 2 = booleen
+
+    load = config.get(OPTION, data)
+
+    if typeData == 1:
+        value = float(load)
+
+    elif typeData == 2:
+        value = True
+
+        if load == "false" :
+            value = False
+        elif load != "false" and load != "true":
+            print("Error donner du ini incorecte la valeur", data,"prendra sera par défaut activer")
+    else: 
+        value = load
     
     return value
 
