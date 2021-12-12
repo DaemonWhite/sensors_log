@@ -8,8 +8,8 @@ class Environement() :
     else:
         ini.update("0.0.1a")
 
-    launchLog = ini.load("DEFAULT", "log_file", 2)
-    launchEvent = ini.load("DEFAULT", "event_file", 2)
+    launchLog = ini.load("ENVIRONEMENT", "log_file", 2)
+    launchEvent = ini.load("ENVIRONEMENT", "event_file", 2)
 
     ver = ini.load("VERSION", "version", 0)
 
