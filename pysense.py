@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from sense_emu import SenseHat
+from sense_hat import SenseHat
 import time
 import datetime
 import asyncio
@@ -31,8 +31,11 @@ def hours():
     return retHours
 
 #Test present sense hat
-def test():
+def test(env):
     #Define Colors
+
+    sense.set_imu_config(True, True, True)
+
     noColors = (0, 0, 0)
     red = (255, 0, 0)
 
@@ -60,7 +63,7 @@ def test():
 
 #Event isWokining
 async def event(env):
-    repEvent = "event/event.txt"
+    repEvent = env.path + "/event/event.txt"
 
     stopTime = env.getTime("event_step")
 
@@ -79,22 +82,22 @@ async def log(env):
     isPressure =  env.getSensors('presure')
     isOrientation = env.getSensors('orientation')
     #compas
-    #accel_only
+    isAccel = env.getSensors('accel')
     isTemp = env.getSensors('temp')
     
     while env.launchLog:
 
-        humidity = sense.humidity
+        humidity = sense.get_humidity()
         pressure = sense.get_pressure()
         orientation = sense.get_orientation_degrees()
-        compas = sense.get_compass_raw()
+        #compas = sense.get_compass() Disable Gyroscope et magnetometre pour fonctioner
         accel_only = sense.get_accelerometer()
-        temp = sense.temp
+        temp = sense.get_temperature_from_pressure()
 
         h = hours()
     
         if sleepTime >= sleep:
-            repLog = "log/"
+            repLog = env.path + "/log/"
             repLog += h
             repLog += ".log"
             sleepTime = 0.0
@@ -103,14 +106,15 @@ async def log(env):
             sleepTime += stopTime
 
         file.writeFile(repLog, h)
+
         if isHumidity:
             file.writeFile(repLog,  file.format("humidity", humidity))
         if isPressure:
             file.writeFile(repLog, file.format("pressure", pressure))
         if isOrientation:
             file.writeFile(repLog, file.format("orientation", orientation))
-        file.writeFile(repLog, file.format("compas", compas))
-        file.writeFile(repLog, file.format("accel", accel_only))
+        if isAccel:
+            file.writeFile(repLog, file.format("accel", accel_only))
         if isTemp:
             file.writeFile(repLog, file.format("temp", temp))
 

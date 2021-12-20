@@ -1,13 +1,16 @@
 import conf as ini
 
 class Environement() :
-    'This is Data class' 
+    'This is Data class'
+
+    version="0.0.1a"
 
     if ini.verif():
         ini.create()
     else:
-        ini.update("0.0.1a")
+        ini.update(version)
 
+    path = ini.load("ENVIRONEMENT", "path", 0)
     launchLog = ini.load("ENVIRONEMENT", "log_file", 2)
     launchEvent = ini.load("ENVIRONEMENT", "event_file", 2)
 

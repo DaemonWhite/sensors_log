@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from packaging.version import Version, parse
 
+import interface as guiTer
 import configparser
 import os
 
@@ -19,10 +20,12 @@ def verif():
     return value
 
 def create():
+    pwd = os.getcwd()
     
     #config['DEFAULT'] = {'log': 'true', 'log_time' : '300.0','event': 'true', 'timeStep' : '0.5'}
     config['ENVIRONEMENT'] = {
-        'term': True, 'path': '',
+        'term': True, 
+        'path': pwd,
         'log_file': 'true',
         'log_view': 'false',
         'event_file': 'true',
@@ -38,7 +41,7 @@ def create():
     config['SENSORS'] = {
         'humid': 'true',
         'presure': 'true',
-        'temp': 'false',
+        'temp': 'true',
         'orientation' : 'true',
         'Accel' : 'false'}
 
@@ -47,7 +50,7 @@ def create():
     with open('conf.ini', 'w') as configfile:
         config.write(configfile)
 
-    print("Fichier de configuraton créer")
+    guiTer.syntaxTermLog(0, "Fichier de configuraton créer")
 
 def load(OPTION, data, typeData):
     #typeData 0 = str
@@ -65,14 +68,14 @@ def load(OPTION, data, typeData):
         if load == "false" :
             value = False
         elif load != "false" and load != "true":
-            print("Error donner du ini incorecte la valeur", data,"prendra sera par défaut activer")
+            guiTer.syntaxTermLog(2, "Erreur donner du ini incorecte la valeur", data,"prendra sera par défaut activer")
     else: 
         value = load
     
     return value
 
-def modify():
-    config.set('DEFAULT','log', 'false')
+def modify(OPTION, data, value):
+    config.set(OPTION, data, value)
 
     with open('conf.ini', 'w') as configfile:
         config.write(configfile)

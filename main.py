@@ -14,22 +14,20 @@ async def main():
 
     restart= True
 
-    file.verif()
+    file.verif(env.path)
 
-    print("Verification de la présence su senseHat")
-    senseHat.test()
-
-    print("senseHat detecter démarage")
+    guiTer.syntaxTermLog(0, "Verification de la présence su senseHat")
+    senseHat.test(env)
+    guiTer.syntaxTermLog(0, "senseHat detecter démarage")
 
     while restart:
         retFunc = await asyncio.gather(senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
-        print(retFunc[2])
         restart = retFunc[2]
 
         if restart == True: 
-            print("Redemarage...")
+            guiTer.syntaxTermLog(0, "Redemarage...")
 
-    print("Fermeture du programe")
+    guiTer.syntaxTermLog(0, "Fermeture du programe")
     exit()
 
 asyncio.run(main())
