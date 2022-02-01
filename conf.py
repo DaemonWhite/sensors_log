@@ -4,6 +4,7 @@ from packaging.version import Version, parse
 import interface as guiTer
 import configparser
 import os
+import csv
 
 config = configparser.ConfigParser()
 config.read("conf.ini")
@@ -71,6 +72,8 @@ def load(OPTION, data, typeData):
             guiTer.syntaxTermLog(2, "Erreur donner du ini incorecte la valeur", data,"prendra sera par défaut activer")
     else: 
         value = load
+
+
     
     return value
 

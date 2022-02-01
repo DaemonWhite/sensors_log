@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import interface as guiTer
 import os
+import csv
 
 #verif is foleder exist
 
@@ -24,7 +25,6 @@ def verif(path):
         os.makedirs(pathLog)
         guiTer.syntaxTermLog(0, "Dossier Log créer")
 
-    return 1
 
 
 #Fomat data for log and event
@@ -34,7 +34,11 @@ def format(type, value):
 
 #Create log or event file
 def writeFile(file, value):
-    txt = open(file, "a")
-    genTxt = value + "\n"
-    txt.write(genTxt)
-    txt.close()
+    header = ['Heure','humid','presure','temp','orientation x','orientation y','orientation z','accel x','accel y','accel z']
+    ise = os.path.isfile(file)
+
+    with open(file, 'a', encoding='UTF8') as f:
+        writer = csv.writer(f)
+        if ise != True:
+            writer.writerow(header)
+        writer.writerow(value)

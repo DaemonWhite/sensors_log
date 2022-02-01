@@ -68,7 +68,7 @@ async def event(env):
     stopTime = env.getTime("event_step")
 
     while env.launchEvent:
-        file.writeFile(repEvent, "ok")
+        #file.writeFile(repEvent, "ok")
         await asyncio.sleep(stopTime)
 
 #Log isWorkig but functional
@@ -91,31 +91,53 @@ async def log(env):
         pressure = sense.get_pressure()
         orientation = sense.get_orientation_degrees()
         #compas = sense.get_compass() Disable Gyroscope et magnetometre pour fonctioner
-        accel_only = sense.get_accelerometer()
+        accel_only = sense.get_accelerometer_raw()
         temp = sense.get_temperature_from_pressure()
+
+        tempon = "Error"
+
+        sendTabl = []
 
         h = hours()
     
         if sleepTime >= sleep:
             repLog = env.path + "/log/"
             repLog += h
-            repLog += ".log"
+            repLog += ".csv"
             sleepTime = 0.0
     
         else:
             sleepTime += stopTime
 
-        file.writeFile(repLog, h)
+        sendTabl.append(h)
 
         if isHumidity:
-            file.writeFile(repLog,  file.format("humidity", humidity))
+            #file.writeFile(repLog,  file.format("humidity", humidity))
+            sendTabl.append(humidity)
         if isPressure:
-            file.writeFile(repLog, file.format("pressure", pressure))
-        if isOrientation:
-            file.writeFile(repLog, file.format("orientation", orientation))
-        if isAccel:
-            file.writeFile(repLog, file.format("accel", accel_only))
+           #file.writeFile(repLog, file.format("pressure", pressure))
+           sendTabl.append(pressure)
         if isTemp:
-            file.writeFile(repLog, file.format("temp", temp))
+            #file.writeFile(repLog, file.format("temp", temp))
+            sendTabl.append(temp)
+        if isOrientation:
+            #file.writeFile(repLog, file.format("orientation", orientation))
+            tempon = "{pitch}".format(**orientation)
+            sendTabl.append(tempon)
+            tempon = "{roll}".format(**orientation)
+            sendTabl.append(tempon)
+            tempon = "{yaw}".format(**orientation)
+            sendTabl.append(tempon)
+        if isAccel:
+            #file.writeFile(repLog, file.format("accel", accel_only))
+            tempon = accel_only['x']
+            sendTabl.append(tempon)
+            tempon = accel_only['y']
+            sendTabl.append(tempon)
+            tempon = accel_only['z']
+            sendTabl.append(tempon)
+              
+
+        file.writeFile(repLog, sendTabl)
 
         await asyncio.sleep(stopTime)
