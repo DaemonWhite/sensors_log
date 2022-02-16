@@ -121,6 +121,7 @@ async def term(env, arg):
 		print("\n\n")
 		print("Demarer les un service(redemare le programe)\nstart log|event\n\narreter un service\nstop log|event")
 		print('\nChanger le chemin des log\npath chemin')
+		print('\nArret du programe\nqqq')
 
 	else:
 		syntaxTermLog(1, "Parametre inconue taper help pour voire l'aide")

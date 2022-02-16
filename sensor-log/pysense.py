@@ -9,6 +9,13 @@ import file
 # defineSense
 sense = SenseHat()
 
+def truncate(n, decimals=1):
+    calc= float(n)
+
+    multiplier = pow(10,decimals)
+
+    return int(calc * multiplier)/multiplier
+
 #Fomat hours 
 def hours():
     defineDate = datetime.datetime.now()
@@ -113,28 +120,28 @@ async def log(env):
 
         if isHumidity:
             #file.writeFile(repLog,  file.format("humidity", humidity))
-            sendTabl.append(humidity)
+            sendTabl.append(truncate(humidity, 3))
         if isPressure:
            #file.writeFile(repLog, file.format("pressure", pressure))
-           sendTabl.append(pressure)
+           sendTabl.append(truncate(pressure, 3))
         if isTemp:
             #file.writeFile(repLog, file.format("temp", temp))
-            sendTabl.append(temp)
+            sendTabl.append(truncate(temp))
         if isOrientation:
             #file.writeFile(repLog, file.format("orientation", orientation))
             tempon = "{pitch}".format(**orientation)
-            sendTabl.append(tempon)
+            sendTabl.append(truncate(tempon, 3))
             tempon = "{roll}".format(**orientation)
-            sendTabl.append(tempon)
+            sendTabl.append(truncate(tempon, 3))
             tempon = "{yaw}".format(**orientation)
-            sendTabl.append(tempon)
+            sendTabl.append(truncate(tempon, 3))
         if isAccel:
             #file.writeFile(repLog, file.format("accel", accel_only))
-            tempon = accel_only['x']
+            tempon = truncate(accel_only['x'], 2)
             sendTabl.append(tempon)
-            tempon = accel_only['y']
+            tempon = truncate(accel_only['y'], 2)
             sendTabl.append(tempon)
-            tempon = accel_only['z']
+            tempon = truncate(accel_only['z'], 2)
             sendTabl.append(tempon)
               
 
