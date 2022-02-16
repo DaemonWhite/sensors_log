@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import asyncio
 
 import file
@@ -15,6 +15,8 @@ async def main():
     restart= True
 
     file.verif(env.path)
+
+    print(env.path)
 
     guiTer.syntaxTermLog(0, "Verification de la présence su senseHat")
     senseHat.test(env)

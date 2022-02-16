@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import conf as ini
 
 class Environement() :

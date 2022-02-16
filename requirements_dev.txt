@@ -1,4 +1,6 @@
 sense-emu==1.1
+vext==0.7.6
+vext.gi==0.7.4
 asyncio==3.4.3
 aioconsole==0.3.3
 configparser==5.2.0

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#! /usr/bin/python3
 from sense_emu import SenseHat
 import time
 import datetime
