@@ -130,21 +130,21 @@ async def term(env, arg):
 	return ret
 
 async def guiMain(env):
-	isGuiFunc=True
 	ret = True
 	syntaxTermLog(0, "Environement démarer!")
+	isRet =0
 
-	while isGuiFunc:
+	while env.termEnable:
 		arg = await aioconsole.ainput("> ")
 		isRet = await asyncio.gather(term(env, arg))
 
 		if isRet[0] == 0:
 			isRet = False
-			isGuiFunc =False
+			env.termEnable =False
 
 		elif isRet[0] == 1:
 			isRet = True
-			isGuiFunc =False
+			env.termEnable =False
 
 
 	return isRet

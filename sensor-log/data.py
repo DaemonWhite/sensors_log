@@ -14,6 +14,7 @@ class Environement() :
     path = ini.load("ENVIRONEMENT", "path", 0)
     launchLog = ini.load("ENVIRONEMENT", "log_file", 2)
     launchEvent = ini.load("ENVIRONEMENT", "event_file", 2)
+    termEnable = ini.load("ENVIRONEMENT", "term", 2)
 
     ver = ini.load("VERSION", "version", 0)
 

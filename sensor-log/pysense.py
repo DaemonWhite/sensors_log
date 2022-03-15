@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-from sense_emu import SenseHat
+from sense_hat import SenseHat
 import time
 import datetime
 import asyncio
@@ -16,7 +16,7 @@ def truncate(n, decimals=1):
 
     return int(calc * multiplier)/multiplier
 
-#Fomat hours 
+#Fomat hours
 def hours():
     defineDate = datetime.datetime.now()
 
@@ -34,6 +34,17 @@ def hours():
     retHours += "m"
     retHours += str(defineDate.second)
     retHours += "s]"
+
+    return retHours
+
+def hoursForm():
+    defineDate = datetime.datetime.now()
+
+    retHours += str(defineDate.hour)
+    retHours += ":"
+    retHours += str(defineDate.minute)
+    retHours += ":"
+    retHours += str(defineDate.second)
 
     return retHours
 
@@ -116,7 +127,7 @@ async def log(env):
         else:
             sleepTime += stopTime
 
-        sendTabl.append(h)
+        sendTabl.append(hoursForm)
 
         if isHumidity:
             #file.writeFile(repLog,  file.format("humidity", humidity))

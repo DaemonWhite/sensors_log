@@ -25,7 +25,7 @@ def create():
     
     #config['DEFAULT'] = {'log': 'true', 'log_time' : '300.0','event': 'true', 'timeStep' : '0.5'}
     config['ENVIRONEMENT'] = {
-        'term': True, 
+        'term': 'true', 
         'path': pwd,
         'log_file': 'true',
         'log_view': 'false',

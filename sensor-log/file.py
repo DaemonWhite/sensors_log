@@ -34,8 +34,10 @@ def format(type, value):
 
 #Create log or event file
 def writeFile(file, value):
-    header = ['Heure','humid','presure','temp','orientation x','orientation y','orientation z','accel x','accel y','accel z']
+    header = ['Heure','humid','presure','temp','orientation_x','orientation_y','orientation_z','accel_x','accel_y','accel_z']
     ise = os.path.isfile(file)
+
+
 
     with open(file, 'a', encoding='UTF8') as f:
         writer = csv.writer(f)
