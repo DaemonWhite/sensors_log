@@ -47,13 +47,13 @@ def hours():
 def hoursForm():
     defineDate = datetime.datetime.now()
 
-    retHours += str(defineDate.hour)
+    retHours = str(defineDate.hour)
     retHours += ":"
     retHours += str(defineDate.minute)
     retHours += ":"
     retHours += str(defineDate.second)
 
-    return retHours
+    return str(retHours)
 
 #Test present sense hat
 def test(env):
@@ -134,7 +134,7 @@ async def log(env):
         else:
             sleepTime += stopTime
 
-        sendTabl.append(hoursForm)
+        sendTabl.append(hoursForm())
 
         if isHumidity:
             #file.writeFile(repLog,  file.format("humidity", humidity))
