@@ -9,12 +9,19 @@ import pysense as senseHat
 from data import Environement
 from kill import GracefulKiller
 
+async def start(env):
+    restart= True
+
+    while restart:
+        retFunc = await asyncio.gather(senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
+        restart = retFunc[2]
+
+        if restart == True: 
+            guiTer.syntaxTermLog(0, "Redemarage...")
+
 
 
 async def main(env):
-
-    restart= True
-
     file.verif(env.path)
 
     print(env.path)
@@ -23,29 +30,39 @@ async def main(env):
     senseHat.test(env)
     guiTer.syntaxTermLog(0, "senseHat detecter démarage")
 
-    while restart:
-        retFunc = await asyncio.gather(killFunction(env), senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
-        restart = retFunc[2]
+    try:
+        await asyncio.gather(killFunction(env),start(env))
+    except  BaseException:
+        guiTer.syntaxTermLog(1, "Fermeture du programe extérieure ou plantage")
+    
 
-        print(restart)
 
-        if restart == True: 
-            guiTer.syntaxTermLog(0, "Redemarage...")
+    
 
 async def killFunction(kenv):
     killer = GracefulKiller()
+    noKill=True
 
-    while not (killer.kill_now) or (kenv.termEnable == False) or (kenv.launchLog == False) or (kenv.launchEvent == False):
+    while noKill:
         await asyncio.sleep(1)
+        if (killer.kill_now):
+            noKill=False
+        elif (kenv.termEnable == False) and (kenv.launchLog == False) and (kenv.launchEvent == False):
+            noKill=False
 
     kenv.launchLog = False
     kenv.launchEvent = False
     kenv.termEnable = False
 
-    guiTer.syntaxTermLog(0, "\nFermeture du programe")
+    await asyncio.sleep(1)
 
+    guiTer.syntaxTermLog(0, "Fermeture du programe")
     exit()
+
+    
 
 if __name__ == '__main__':
     enve = Environement()
     asyncio.run(main(enve))
+
+   

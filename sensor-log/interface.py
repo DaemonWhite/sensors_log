@@ -136,6 +136,10 @@ async def guiMain(env):
 
 	while env.termEnable:
 		arg = await aioconsole.ainput("> ")
+		
+		if not (arg):
+			arg="q"
+
 		isRet = await asyncio.gather(term(env, arg))
 
 		if isRet[0] == 0:
