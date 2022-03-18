@@ -1,10 +1,17 @@
 #! /usr/bin/python3
-from sense_hat import SenseHat
+
 import time
 import datetime
 import asyncio
 
 import file
+import interface as guiTer
+
+try:
+    from sense_hat import SenseHat
+except ImportError :
+    guiTer.syntaxTermLog(1, "Module sense hat non trouvé chargement du module sense_emu")
+    from sense_emu import SenseHat
 
 # defineSense
 sense = SenseHat()
