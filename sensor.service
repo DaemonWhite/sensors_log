@@ -1,0 +1,15 @@
+[Unit]
+Description=Your Daemon
+
+#StartLimitIntervalSec=500
+#StartLimitBurst=5
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/Projet/main.py
+#WorkingDirectory=/home/pi
+User=root
+[Install]
+WantedBy=multi-user.target
