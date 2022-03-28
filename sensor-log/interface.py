@@ -12,7 +12,7 @@ def syntaxTermLog(typeMes, message):
 		textTypeMess = "\033[94m[Info]"
 
 	elif typeMes == 1:
-		textTypeMess = "\033[93m[Avertisement]"
+		textTypeMess = "\033[93m[Avertissement]"
 
 	elif typeMes == 2:
 		textTypeMess = "\033[91m[Erreur]"
@@ -52,16 +52,16 @@ async def term(env, arg):
 		if nbTabWrap >= 2:
 			if argTab[1] == "event":
 				env.launchEvent=False
-				syntaxTermLog(0, "Enregistrement des évenement arréter")
+				syntaxTermLog(0, "Enregistrement des événement arréter")
 
 			elif argTab[1] == "log":
 				env.launchLog=False
-				syntaxTermLog(0, "Enregistrement des log arréter")
+				syntaxTermLog(0, "Enregistrement des événements arrêter")
 
 			else:
-				syntaxTermLog(2, "valeur inconue veulier réssayer avec event ou log")
+				syntaxTermLog(2, "valeur inconnue veuillez réessayer avec event ou log")
 		else:
-			syntaxTermLog(1, "Il manque un parametre")
+			syntaxTermLog(1, "Il manque un paramètre")
 
 	elif argTab[0] == "start":
 
@@ -70,19 +70,19 @@ async def term(env, arg):
 			
 				await systemLauch(env, True, env.launchLog)
 	
-				syntaxTermLog(0, "Demarage de Event!")
+				syntaxTermLog(0, "Démarrage de Event!")
 				ret = 1
 
 			elif argTab[1] == "log":
 
 				await systemLauch(env, env.launchEvent, True)
-				syntaxTermLog(0, "Demarage de Log!")
+				syntaxTermLog(0, "Démarrage de Log!")
 				ret = 1
 
 			else:
-				syntaxTermLog (1, "valeur inconue veulier réssayer avec event ou log")
+				syntaxTermLog (1, "valeur inconnue veuillez réessayer avec event ou log")
 		else:
-			syntaxTermLog(1, "Il manque un parametre")
+			syntaxTermLog(1, "Il manque un paramètre")
 
 	elif argTab[0] == "path":
 		if nbTabWrap >= 2:
@@ -107,31 +107,31 @@ async def term(env, arg):
 				ok = file.verif(path)
 				ini.modify("ENVIRONEMENT","path", path)
 				env.path = path
-				print("Chemin changer vers : "+ path)
+				print("Chemin changé vers : "+ path)
 
 					
 			else:
-				syntaxTermLog(2, "Le chemin doit etres entre des guillemet ")
+				syntaxTermLog(2, "Le chemin doit êtres entre des guillemets")
 		else:
-			syntaxTermLog(1, "Il manque un parametre")
+			syntaxTermLog(1, "Il manque un paramètre")
 
 
 	elif argTab[0] == "help":
 		print("Sensors log ", env.version,"\nby DaemonWhite")
 		print("\n\n")
-		print("Demarer les un service(redemare le programe)\nstart log|event\n\narreter un service\nstop log|event")
-		print('\nChanger le chemin des log\npath chemin')
-		print('\nArret du programe\nqqq')
+		print("Démarrer les un service(redémarre le programme)\nstart log|event\n\narreter un service\nstop log|event")
+		print('\nChanger le chemin des logs\npath chemin')
+		print('\nArret du programme\nqqq')
 
 	else:
-		syntaxTermLog(1, "Parametre inconue taper help pour voire l'aide")
+		syntaxTermLog(1, "Paramètre inconnue taper help pour voir l'aide.")
 
 
 	return ret
 
 async def guiMain(env):
 	ret = True
-	syntaxTermLog(0, "Environement démarer!")
+	syntaxTermLog(0, "Environement démarré!")
 	isRet =0
 
 	while env.termEnable:

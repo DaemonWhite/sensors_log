@@ -51,7 +51,7 @@ def create():
     with open('conf.ini', 'w') as configfile:
         config.write(configfile)
 
-    guiTer.syntaxTermLog(0, "Fichier de configuraton créer")
+    guiTer.syntaxTermLog(0, "Fichier de configuration créer")
 
 def load(OPTION, data, typeData):
     #typeData 0 = str
@@ -69,7 +69,7 @@ def load(OPTION, data, typeData):
         if load == "false" :
             value = False
         elif load != "false" and load != "true":
-            guiTer.syntaxTermLog(2, "Erreur donner du ini incorecte la valeur", data,"prendra sera par défaut activer")
+            guiTer.syntaxTermLog(2, "Erreur donnée du ini incorrecte la valeur", data,"prendra sera par défaut activé")
     else: 
         value = load
 

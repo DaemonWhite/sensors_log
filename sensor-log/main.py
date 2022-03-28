@@ -13,11 +13,18 @@ async def start(env):
     restart= True
 
     while restart:
-        retFunc = await asyncio.gather(senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
+        try:
+            if env.termEnable:
+                retFunc = await asyncio.gather(senseHat.event(env), senseHat.log(env), guiTer.guiMain(env))
+            else:
+                retFunc = await asyncio.gather(senseHat.event(env), senseHat.log(env))
+        except BaseException:
+            guiTer.syntaxTermLog(1, "Fermeture du programme extérieure ou plantage")
         restart = retFunc[2]
+        print(retFunc[2])
 
         if restart == True: 
-            guiTer.syntaxTermLog(0, "Redemarage...")
+            guiTer.syntaxTermLog(0, "Redémarrage...")
 
 
 
@@ -26,14 +33,14 @@ async def main(env):
 
     print(env.path)
 
-    guiTer.syntaxTermLog(0, "Verification de la présence su senseHat")
+    guiTer.syntaxTermLog(0, "Vérification de la présence du senseHat")
     senseHat.test(env)
-    guiTer.syntaxTermLog(0, "senseHat detecter démarage")
+    guiTer.syntaxTermLog(0, "senseHat détecter démarrage")
 
     try:
         await asyncio.gather(killFunction(env),start(env))
     except  BaseException:
-        guiTer.syntaxTermLog(1, "Fermeture du programe extérieure ou plantage")
+        guiTer.syntaxTermLog(1, "Fermeture du programme extérieure ou plantage")
     
 
 
@@ -56,7 +63,7 @@ async def killFunction(kenv):
 
     await asyncio.sleep(1)
 
-    guiTer.syntaxTermLog(0, "Fermeture du programe")
+    guiTer.syntaxTermLog(0, "Fermeture du programme")
     exit()
 
     
