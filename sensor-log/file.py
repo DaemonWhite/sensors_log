@@ -7,7 +7,7 @@ import csv
 
 def verif(path):
     if path == os.getcwd() or path == os.getcwd() + "/":
-        guiTer.syntaxTermLog(1, "Chemin par default et utiliser : " + path)
+        guiTer.syntaxTermLog(1, "Chemin par defaut et utilisé :  " + path)
     else:
         guiTer.syntaxTermLog(0, "Chemin des sorties : " + path)
 
@@ -19,11 +19,11 @@ def verif(path):
 
     if isEvent != True:
         os.makedirs(pathEvent)
-        guiTer.syntaxTermLog(0, "Dossier Event créer")
+        guiTer.syntaxTermLog(0, "Dossier Event créé")
 
     if isLog != True:
         os.makedirs(pathLog)
-        guiTer.syntaxTermLog(0, "Dossier Log créer")
+        guiTer.syntaxTermLog(0, "Dossier Log créé")
 
 
 

@@ -23,7 +23,7 @@ async def systemLauch(env, defEvent, defLog):
 	env.launchEvent=False
 	env.launchLog=False
 
-	syntaxTermLog(0, "Arret des services")
+	syntaxTermLog(0, "Arrêt des services")
 
 	await asyncio.sleep(1.0)
 
@@ -52,14 +52,14 @@ async def term(env, arg):
 		if nbTabWrap >= 2:
 			if argTab[1] == "event":
 				env.launchEvent=False
-				syntaxTermLog(0, "Enregistrement des événement arréter")
+				syntaxTermLog(0, "Enregistrement... Fin des événements")
 
 			elif argTab[1] == "log":
 				env.launchLog=False
-				syntaxTermLog(0, "Enregistrement des événements arrêter")
+				syntaxTermLog(0, "Enregistrement... Fin des événements")
 
 			else:
-				syntaxTermLog(2, "valeur inconnue veuillez réessayer avec event ou log")
+				syntaxTermLog(2, "Valeur inconnue veuillez réessayer avec event ou log")
 		else:
 			syntaxTermLog(1, "Il manque un paramètre")
 
@@ -70,17 +70,17 @@ async def term(env, arg):
 			
 				await systemLauch(env, True, env.launchLog)
 	
-				syntaxTermLog(0, "Démarrage de Event!")
+				syntaxTermLog(0, "Démarrage de Event !")
 				ret = 1
 
 			elif argTab[1] == "log":
 
 				await systemLauch(env, env.launchEvent, True)
-				syntaxTermLog(0, "Démarrage de Log!")
+				syntaxTermLog(0, "Démarrage de Log !")
 				ret = 1
 
 			else:
-				syntaxTermLog (1, "valeur inconnue veuillez réessayer avec event ou log")
+				syntaxTermLog (1, "Valeur inconnue veuillez réessayer avec event ou log")
 		else:
 			syntaxTermLog(1, "Il manque un paramètre")
 
@@ -111,7 +111,7 @@ async def term(env, arg):
 
 					
 			else:
-				syntaxTermLog(2, "Le chemin doit êtres entre des guillemets")
+				syntaxTermLog(2, "Le chemin doit être entre des guillemets")
 		else:
 			syntaxTermLog(1, "Il manque un paramètre")
 
@@ -119,12 +119,12 @@ async def term(env, arg):
 	elif argTab[0] == "help":
 		print("Sensors log ", env.version,"\nby DaemonWhite")
 		print("\n\n")
-		print("Démarrer les un service(redémarre le programme)\nstart log|event\n\narreter un service\nstop log|event")
+		print("Démarrer les services(redémarre le programme):\nstart <log|event>\n\nArreter un service:\nstop <log|event>")
 		print('\nChanger le chemin des logs\npath chemin')
-		print('\nArret du programme\nqqq')
+		print('\nArrêt du programme\nqqq')
 
 	else:
-		syntaxTermLog(1, "Paramètre inconnue taper help pour voir l'aide.")
+		syntaxTermLog(1, "Paramètre inconnu tapez help pour avoir l'aide.")
 
 
 	return ret
