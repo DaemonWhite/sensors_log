@@ -10,8 +10,11 @@ import interface as guiTer
 try:
     from sense_hat import SenseHat
 except ImportError :
-    guiTer.syntaxTermLog(1, "Module sense hat non trouvé chargement du module sense_emu")
-    from sense_emu import SenseHat
+    try:
+        guiTer.syntaxTermLog(1, "Module sense hat non trouvé chargement du module sense_emu")
+        from sense_emu import SenseHat
+    except ImportError:
+        guiTer.syntaxTermLog(1, "Module sense hat et sense emu non trouvé")
 
 # defineSense
 sense = SenseHat()

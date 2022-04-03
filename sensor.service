@@ -8,7 +8,7 @@ Description=Your Daemon
 Restart=on-failure
 RestartSec=5s
 Type=simple
-ExecStart=/usr/bin/python3 /home/pi/Projet/main.py
+ExecStart=/usr/bin/python3 /home/pi/Projet/sensor-log/main.py
 #WorkingDirectory=/home/pi
 User=root
 [Install]
