@@ -6,6 +6,29 @@ import time
 import conf as ini
 import file
 
+def viewCurrentConf(env):
+	print("chemin : ", env.path)
+	print("log : ", env.launchLog)
+	print("event : ", env.launchEvent)
+	print("Version : ", env.ver)
+
+def viewFileConf(env):
+	print("ENVIRONEMENT")
+	print("chemin : ", env.path)
+	print("log : ", env.getEnv("log_file"))
+	print("event : ", env.getEnv("event_file"))
+	print("\nTIME")
+	print("Durré CSV log", env.getTime("log_time"))
+	print("Delay capture log", env.getTime("log_step"))
+	print("Delay capture event", env.getTime("event_step"))
+	print("\nSENSORS")
+	print("Humidité : ", env.getSensors("humid"))
+	print("Pression : ", env.getSensors("presure"))
+	print("Temperature : ", env.getSensors("temp"))
+	print("Orientation : ", env.getSensors("orientation"))
+	print("Acceletation : ", env.getSensors("accel"))
+	print("\nVersion : ", env.ver)
+
 def syntaxTermLog(typeMes, message):
 
 	if typeMes == 0:
@@ -38,7 +61,6 @@ async def term(env, arg):
 	tmp: bool
 
 	argTab = arg.split()
-	print(len(argTab))
 
 	nbTabWrap = len(argTab)
 
@@ -115,6 +137,17 @@ async def term(env, arg):
 		else:
 			syntaxTermLog(1, "Il manque un paramètre")
 
+	elif argTab[0] == "viewConf":
+		if nbTabWrap >= 2:
+			if argTab[1]== "current":
+				viewCurrentConf(env)
+			elif argTab[1]== "save":
+				viewFileConf(env)
+		else:
+			print("\nConfiguration actuelle\n")
+			viewCurrentConf(env)
+			print("\nFichier de configuration\n")
+			viewFileConf(env)			
 
 	elif argTab[0] == "help":
 		print("Sensors log ", env.version,"\nby DaemonWhite")

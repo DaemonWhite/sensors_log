@@ -32,8 +32,6 @@ async def start(env):
 async def main(env):
     file.verif(env.path)
 
-    print(env.path)
-
     guiTer.syntaxTermLog(0, "Verification de la présence du senseHat ...")
     senseHat.test(env)
     guiTer.syntaxTermLog(0, "Sense Hat détecté. Démarrage en cours...")
