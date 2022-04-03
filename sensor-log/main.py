@@ -25,6 +25,7 @@ async def start(env):
 
         if restart == True: 
             guiTer.syntaxTermLog(0, "Redémarrage...")
+            env.termEnable=True
 
 
 
@@ -40,7 +41,7 @@ async def main(env):
     try:
         await asyncio.gather(killFunction(env),start(env))
     except  BaseException:
-        guiTer.syntaxTermLog(1, "Fermeture du programme par l'extérieur ou plantage du processus")
+        guiTer.syntaxTermLog(1, "1 Fermeture du programme par l'extérieur ou plantage du processus")
     
 
 
@@ -64,12 +65,13 @@ async def killFunction(kenv):
     await asyncio.sleep(1)
 
     guiTer.syntaxTermLog(0, "Fermeture du programme")
-    exit()
+    
 
     
 
 if __name__ == '__main__':
     enve = Environement()
     asyncio.run(main(enve))
+    exit()
 
    

@@ -130,7 +130,7 @@ async def term(env, arg):
 	return ret
 
 async def guiMain(env):
-	ret = True
+	ret = False
 	syntaxTermLog(0, "Environement démarré!")
 	isRet =0
 
@@ -143,12 +143,12 @@ async def guiMain(env):
 		isRet = await asyncio.gather(term(env, arg))
 
 		if isRet[0] == 0:
-			isRet = False
+			ret = False
 			env.termEnable =False
 
 		elif isRet[0] == 1:
-			isRet = True
+			ret = True
 			env.termEnable =False
 
 
-	return isRet
+	return ret
