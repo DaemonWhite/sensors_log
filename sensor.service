@@ -1,5 +1,6 @@
 [Unit]
-Description=Your Daemon
+Description=Your capture data sensors for sense hat 
+#After=lightdm.service
 
 #StartLimitIntervalSec=500
 #StartLimitBurst=5
