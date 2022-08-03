@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 from packaging.version import Version, parse
+from tui import ui
 
-import interface as guiTer
 import configparser
 import os
 import csv
 
+tui = ui()
 config = configparser.ConfigParser()
 config.read("conf.ini")
 
@@ -44,14 +45,14 @@ def create():
         'presure': 'true',
         'temp': 'true',
         'orientation' : 'true',
-        'Accel' : 'false'}
+        'accel' : 'false'}
 
     config['VERSION'] = {'version': '0.0.1a'}
 
     with open('conf.ini', 'w') as configfile:
         config.write(configfile)
 
-    guiTer.syntaxTermLog(0, "Fichier de configuration créé")
+    tui.syntaxTermLog(0, "Fichier de configuration créé")
 
 def load(OPTION, data, typeData):
     #typeData 0 = str
@@ -69,7 +70,7 @@ def load(OPTION, data, typeData):
         if load == "false" :
             value = False
         elif load != "false" and load != "true":
-            guiTer.syntaxTermLog(2, "Erreur de la donnée du point ini est incorrecte, ", data,"sera par défaut activé")
+            tui.syntaxTermLog(2, "Erreur de la donnée du point ini est incorrecte, ", data,"sera par défaut activé")
     else: 
         value = load
 

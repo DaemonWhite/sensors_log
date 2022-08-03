@@ -1,22 +1,27 @@
 #!/usr/bin/python3
 import conf as ini
+from tui import ui
 
 class Environement() :
     'This is Data class'
+    def __init__(self, term=True):
 
-    version="0.0.1a"
+        self.uiLog = ui(term)
 
-    if ini.verif():
-        ini.create()
-    else:
-        ini.update(version)
+        self.uiLog.syntaxLog(0, "coucou")
+        self.version="0.0.1a"
 
-    path = ini.load("ENVIRONEMENT", "path", 0)
-    launchLog = ini.load("ENVIRONEMENT", "log_file", 2)
-    launchEvent = ini.load("ENVIRONEMENT", "event_file", 2)
-    termEnable = ini.load("ENVIRONEMENT", "term", 2)
+        if ini.verif():
+            ini.create()
+        else:
+            ini.update(self.version)
 
-    ver = ini.load("VERSION", "version", 0)
+        self.path = ini.load("ENVIRONEMENT", "path", 0)
+        self.launchLog = ini.load("ENVIRONEMENT", "log_file", 2)
+        self.launchEvent = ini.load("ENVIRONEMENT", "event_file", 2)
+        self.termEnable = ini.load("ENVIRONEMENT", "term", 2)
+
+        self.ver = ini.load("VERSION", "version", 0)
 
     def getSensors(self, options):
         self.value = ini.load("SENSORS", options, 2)

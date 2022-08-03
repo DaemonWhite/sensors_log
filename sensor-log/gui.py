@@ -1,6 +1,7 @@
 import sys
 import gi
 import conf as ini
+import file
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -29,7 +30,7 @@ class LoadConfig():
         self.presure = ini.load("SENSORS", "presure", 2)
         self.temp = ini.load("SENSORS", "temp", 2)
         self.orientation = ini.load("SENSORS", "orientation", 2)
-        self.Accel = ini.load("SENSORS", "Accel", 2)
+        self.Accel = ini.load("SENSORS", "accel", 2)
 
     def get(self, info):
         switch={
@@ -105,9 +106,10 @@ class LoadConfig():
 
 class MainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
-        self.config = LoadConfig()
-        self.config.modif("term", "false")
         super().__init__(*args, **kwargs)
+        self.config = LoadConfig()
+        self.env = Environement(False)
+        self.env.uiLog.syntaxLog(0, "coucou")
         self.mainBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.envBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.timeBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -129,6 +131,8 @@ class MainWindow(Gtk.ApplicationWindow):
         self.envBox.set_spacing(5)
         self.timeBox.set_spacing(5)
         self.sensorBox.set_spacing(5)
+
+        self.spinbutton = []
 
         label_env = Gtk.Label()
         label_env.set_markup("<big><b>ENVIRONEMENT</b></big>")
@@ -165,9 +169,6 @@ class MainWindow(Gtk.ApplicationWindow):
 
         self.set_default_size(600, 250)
         self.set_title("Sensor Log")
-
-    def on_value_changed(self, scroll):
-        print(self.spinbutton.get_value_as_int())
 
     def tesst_slide(self):
         self.slider = Gtk.Scale()
@@ -259,29 +260,41 @@ class MainWindow(Gtk.ApplicationWindow):
         print(int(slider.get_value()))
 
     def path_entry(self):
+        self.currentPath = self.config.get("path")
         self.entry = Gtk.Entry()
         self.entry.set_placeholder_text("Chemin absolue")
-        self.entry.set_text(self.config.get("path"))
+        self.entry.set_text(self.currentPath)
+        #self.entry.connect("value-changed", self.change_path)
+        #self.entry.override_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0.0, 1.0, 0.0, 1.0))
         self.envBox.append(self.entry)
+
+    def change_path(self):
+        print
 
     def generate_spin(self, step, name, conf):
         adjustment = Gtk.Adjustment(upper=100000.0, step_increment=step, page_increment=step)
-        self.spinbutton = Gtk.SpinButton()
-        self.spinbutton.set_adjustment(adjustment)
-        self.spinbutton.set_climb_rate(1.0)
-        self.spinbutton.set_digits(1)
-        self.spinbutton.set_value(self.config.get(conf))
-        self.spinbutton.connect("value-changed", self.on_value_changed)
-        self.spinbutton.set_numeric(True)
+        spinbutton_len = len(self.spinbutton)
+        self.spinbutton.append(Gtk.SpinButton())
+        print(len(self.spinbutton))
+        self.spinbutton[spinbutton_len].set_adjustment(adjustment)
+        self.spinbutton[spinbutton_len].set_climb_rate(1.0)
+        self.spinbutton[spinbutton_len].set_digits(1)
+        self.spinbutton[spinbutton_len].set_value(self.config.get(conf))
+        self.spinbutton[spinbutton_len].connect("value-changed", self.on_value_changed, spinbutton_len,conf)
+        self.spinbutton[spinbutton_len].set_numeric(True)
 
         spinbutton_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        spinbutton_box.append(self.spinbutton)
+        spinbutton_box.append(self.spinbutton[spinbutton_len])
         self.timeBox.append(spinbutton_box)
 
         self.label_term = Gtk.Label(label=name)
         spinbutton_box.append(self.label_term)
-        spinbutton_box.set_spacing(5) 
+        spinbutton_box.set_spacing(5)
 
+
+    def on_value_changed(self, scroll, index, conf):
+        tmp = str(round(self.spinbutton[index].get_value(), 2))
+        self.config.modif(conf, tmp)
 
     def generate_stwitched(self, box, name, conf):
 

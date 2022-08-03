@@ -5,17 +5,17 @@ import datetime
 import asyncio
 
 import file
-import interface as guiTer
-
+from tui import ui
+tui = ui()
 try:
     from sense_hat import SenseHat
 except ImportError :
     try:
-        guiTer.syntaxTermLog(1, "Module sense hat non trouvé chargement du module sense_emu")
+        tui.syntaxTermLog(1, "Module sense hat non trouvé chargement du module sense_emu")
         from sense_emu import SenseHat
     except ImportError:
-        guiTer.syntaxTermLog(1, "Module sense hat et sense emu non trouvé")
-
+        tui.syntaxTermLog(1, "Module sense hat et sense emu non trouvé")
+del tui
 # defineSense
 sense = SenseHat()
 
